@@ -1,0 +1,846 @@
+simple MUX
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 03/04/2020 11:05:05 AM
+-- Design Name: 
+-- Module Name: multiplexer - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity multiplexer is
+ Port ( a : in std_logic;
+        b : in std_logic;
+        c : in std_logic;
+        d : in std_logic;
+        s1 : in std_logic;
+        s0: in std_logic;
+        op : out std_logic);
+end multiplexer;
+
+architecture Behavioral of multiplexer is
+begin
+process(a,b,c,d,s1,s0) is
+begin
+if(s1 = '0' and s0 = '0') then
+op <= a;
+elsif (s1 = '0' and s0 = '1')then
+op <= b;
+elsif (s1 = '1' and s0 = '0')then
+op <= c;
+elsif (s1 = '1' and s0 = '1')then
+op <= d;
+else
+op <= '0';
+
+end if;
+
+end process;
+end Behavioral;
+--------------------------------------------------
+MUX WHENELSE
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 03/04/2020 12:10:47 PM
+-- Design Name: 
+-- Module Name: muxWHENelse - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity muxWHENelse is
+  Port ( a,b,c,d : in std_logic;
+  ss : in std_logic_vector;
+  cout:out std_logic );
+end muxWHENelse;
+
+architecture Behavioral of muxWHENelse is
+
+begin
+cout <= a when ss="00" else 
+     b when ss="01" else 
+     c when ss="10" 
+     else d;
+
+end Behavioral;
+----------------------------------------------
+MUX WHENELSE
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 03/04/2020 12:36:09 PM
+-- Design Name: 
+-- Module Name: muxWITHselect - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity muxWITHselect is
+  Port (a,b,c,d :in std_logic;
+  rr :in std_logic_vector(1 downto 0);
+  oops : out std_logic );
+end muxWITHselect;
+
+architecture Behavioral of muxWITHselect is
+
+begin
+with rr select oops <=
+    a when "00",
+    b when "01",
+    c when "10",
+    d when "11";
+
+end Behavioral;
+---------------------
+MUX CASE
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 03/04/2020 11:56:44 AM
+-- Design Name: 
+-- Module Name: muxusingCASE - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity muxusingCASE is
+ Port ( a,b,c,d :in std_logic;
+        s: in std_logic_vector(1 downto 0); 
+        result :out std_logic);
+        
+end muxusingCASE;
+
+architecture Behavioral of muxusingCASE is
+
+begin
+
+process(a,b,c,d,s)
+begin
+case s is
+   when "00" => result<=a;
+   when "01" => result<=b;
+   when "10" => result<=c;
+   when others => result<=d;
+   end case;
+end process;
+end Behavioral;
+------------------------
+
+XDC FILE(CASE)
+
+set_property PACKAGE_PIN V10 [get_ports {a}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {a}]
+##Bank = 34, Pin name = IO_25_34, Sch name = SW1
+set_property PACKAGE_PIN U11 [get_ports {b}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {b}]
+##Bank = 34, Pin name = IO_L23P_T3_34, Sch name = SW2
+set_property PACKAGE_PIN U12 [get_ports {c}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {c}]
+##Bank = 34, Pin name = IO_L19P_T3_34, Sch name = SW3
+set_property PACKAGE_PIN H6 [get_ports {d}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {d}]
+##Bank = 34, Pin name = IO_L19N_T3_VREF_34, Sch name = SW4
+set_property PACKAGE_PIN T13 [get_ports [s1]] 
+set_property IOSTANDARD LVCMOS33 [get_ports [s1]]
+##Bank = 34, Pin name = IO_L20P_T3_34, Sch name = SW5
+set_property PACKAGE_PIN R16 [get_ports [s0]] 
+set_property IOSTANDARD LVCMOS33 [get_ports [s0]]
+
+set_property PACKAGE_PIN V17 [get_ports {result}] 
+        set_property IOSTANDARD LVCMOS33 [get_ports {result}]
+
+demux
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+entity demux_1to4 is
+port(
+
+ F : in STD_LOGIC;
+S0,S1: in STD_LOGIC;
+A,B,C,D: out STD_LOGIC
+);
+end demux_1to4;
+
+architecture bhv of demux_1to4 is
+begin
+process (F,S0,S1) is
+begin
+if (S0 ='0' and S1 = '0') then
+A <= F;
+elsif (S0 ='1' and S1 = '0') then
+B <= F;
+elsif (S0 ='0' and S1 = '1') then
+C <= F;
+else
+D <= F;
+end if;
+
+end process;
+end bhv;
+
+------------------------------------
+mux
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+entity mux_4to1 is
+port(
+
+     A,B,C,D : in STD_LOGIC;
+     S0,S1: in STD_LOGIC;
+     Z: out STD_LOGIC
+  );
+end mux_4to1;
+
+architecture bhv of mux_4to1 is
+begin
+process (A,B,C,D,S0,S1) is
+begin
+  if (S0 ='0' and S1 = '0') then
+      Z <= A;
+  elsif (S0 ='1' and S1 = '0') then
+      Z <= B;
+  elsif (S0 ='0' and S1 = '1') then
+      Z <= C;
+  else
+      Z <= D;
+  end if;
+
+end process;
+end bhv;
+
+-------------------------------------------------------------------------
+carry look
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity c_look is
+
+port( A,B : in std_logic_vector(3 downto 0);
+        cin : in std_logic;
+        S : out std_logic_vector(3 downto 0);
+        cout : out std_logic
+        );
+end c_look;
+
+architecture Behavioral of c_look is
+signal P,G : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0000";
+signal C : STD_LOGIC_VECTOR(4 DOWNTO 0) := "00000";
+component cla_block is
+port (
+      P : in std_logic_vector(3 downto 0);
+      G : in std_logic_vector(3 downto 0);
+     C : out std_logic_vector(4 downto 0);
+     cin : in std_logic
+     );
+end component;
+begin
+P <= A xor B;
+G <= A and B;
+
+--second level
+gen_c : cla_block port map(P,G,C,cin);
+
+--third level
+S <= P xor C(3 downto 0);
+cout <= C(4);
+
+end Behavioral;
+
+-----------------------------------------
+carrylook_xdc
+
+set_property PACKAGE_PIN U9 [get_ports {A[0]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {A[0]}]
+
+set_property PACKAGE_PIN U8 [get_ports {A[1]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {A[1]}]
+
+set_property PACKAGE_PIN R7 [get_ports {A[2]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {A[2]}]
+
+set_property PACKAGE_PIN R6 [get_ports {A[3]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {A[3]}]
+
+set_property PACKAGE_PIN R5 [get_ports {B[0]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {B[0]}]
+
+set_property PACKAGE_PIN V7 [get_ports {B[1]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {B[1]}]
+
+set_property PACKAGE_PIN V6 [get_ports {B[2]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {B[2]}]
+
+set_property PACKAGE_PIN V5 [get_ports {B[3]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {B[3]}]
+
+set_property PACKAGE_PIN U4 [get_ports {cin}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {cin}]
+
+
+
+
+
+    
+    set_property PACKAGE_PIN V9 [get_ports {S[0]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {S[0]}]
+   
+    set_property PACKAGE_PIN R8 [get_ports {S[1]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {S[1]}]
+   
+    set_property PACKAGE_PIN T6 [get_ports {S[2]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {S[2]}]
+   
+    set_property PACKAGE_PIN T5 [get_ports {S[3]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {S[3]}]
+        
+        set_property PACKAGE_PIN T4 [get_ports {cout}] 
+            set_property IOSTANDARD LVCMOS33 [get_ports {cout}]
+        
+------------------------------------
+carry_save
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity fulladder is
+ port (a : in std_logic;
+           b : in std_logic;
+          cin : in std_logic;
+          sum : out std_logic;
+          carry : out std_logic
+        );
+ end fulladder;
+ 
+ architecture behav of fulladder is
+ begin
+ 
+ sum <= a xor b xor cin;
+ carry <= (a and b) or (b and cin) or (cin and a);
+ end behav;
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity c_saveadder is 
+    Port ( x : in  unsigned (3 downto 0);
+           y : in  unsigned (3 downto 0);
+           z : in  unsigned (3 downto 0);
+           cout : out std_logic;
+           s : out unsigned (4 downto 0)
+              );
+end c_saveadder;
+
+architecture Behavioral of c_saveadder is
+
+component fulladder is
+    port (a : in std_logic;
+            b : in std_logic;
+           cin : in std_logic;
+           sum : out std_logic;
+           carry : out std_logic
+         );
+end component;
+
+signal c1,s1,c2 : unsigned (3 downto 0) := (others => '0');
+
+begin
+
+fa_inst10 : fulladder port map(x(0),y(0),z(0),s1(0),c1(0));
+fa_inst11 : fulladder port map(x(1),y(1),z(1),s1(1),c1(1));
+fa_inst12 : fulladder port map(x(2),y(2),z(2),s1(2),c1(2));
+fa_inst13 : fulladder port map(x(3),y(3),z(3),s1(3),c1(3)); 
+
+fa_inst20 : fulladder port map(s1(1),c1(0),c2(0),s(1),c2(1));
+fa_inst21 : fulladder port map(s1(2),c1(1),c2(1),s(2),c2(2));
+fa_inst22 : fulladder port map(s1(3),c1(2),c2(2),s(3),c2(3));
+fa_inst23 : fulladder port map('0',c1(3),c2(3),s(4),cout); 
+
+s(0) <= s1(0);
+
+end Behavioral;
+-------------------------------
+carrysave xdc
+
+set_property PACKAGE_PIN U9 [get_ports {x[0]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {x[0]}]
+
+set_property PACKAGE_PIN U8 [get_ports {x[1]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {x[1]}]
+
+set_property PACKAGE_PIN R7 [get_ports {x[2]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {x[2]}]
+
+set_property PACKAGE_PIN R6 [get_ports {x[3]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {x[3]}]
+
+set_property PACKAGE_PIN R5 [get_ports {y[0]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {y[0]}]
+
+set_property PACKAGE_PIN V7 [get_ports {y[1]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {y[1]}]
+
+set_property PACKAGE_PIN V6 [get_ports {y[2]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {y[2]}]
+
+set_property PACKAGE_PIN V5 [get_ports {y[3]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {y[3]}]
+
+set_property PACKAGE_PIN U4 [get_ports {z[0]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {z[0]}]
+
+set_property PACKAGE_PIN V2 [get_ports {z[1]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {z[1]}]
+
+set_property PACKAGE_PIN U2 [get_ports {z[2]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {z[2]}]
+
+set_property PACKAGE_PIN T3 [get_ports {z[3]}] 
+set_property IOSTANDARD LVCMOS33 [get_ports {z[3]}]
+
+
+
+set_property PACKAGE_PIN T8 [get_ports {cout}] 
+        set_property IOSTANDARD LVCMOS33 [get_ports {cout}]
+    
+    set_property PACKAGE_PIN V9 [get_ports {s[0]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {s[0]}]
+   
+    set_property PACKAGE_PIN R8 [get_ports {s[1]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {s[1]}]
+   
+    set_property PACKAGE_PIN T6 [get_ports {s[2]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {s[2]}]
+   
+    set_property PACKAGE_PIN T5 [get_ports {s[3]}]                    
+        set_property IOSTANDARD LVCMOS33 [get_ports {s[3]}]
+        
+        set_property PACKAGE_PIN T4 [get_ports {s[4]}] 
+            set_property IOSTANDARD LVCMOS33 [get_ports {s[4]}]
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+ 
+entity carry_save_adder is
+Port ( A : in STD_LOGIC_VECTOR (3 downto 0);
+B : in STD_LOGIC_VECTOR (3 downto 0);
+C : in STD_LOGIC_VECTOR (3 downto 0);
+S : OUT STD_LOGIC_VECTOR (4 downto 0);
+Cout : OUT STD_LOGIC);
+end carry_save_adder;
+ 
+architecture Behavioral of carry_save_adder is
+ 
+component full_adder_vhdl_code
+Port ( A : in STD_LOGIC;
+B : in STD_LOGIC;
+Cin : in STD_LOGIC;
+S : out STD_LOGIC;
+Cout : out STD_LOGIC);
+end component;
+ 
+-- Intermediate signal
+signal X,Y: STD_LOGIC_VECTOR(3 downto 0);
+signal C1,C2,C3: STD_LOGIC;
+ 
+begin
+-- Carry save adder block
+FA1: full_adder_vhdl_code PORT MAP(A(0),B(0),C(0),S(0),X(0));
+FA2: full_adder_vhdl_code PORT MAP(A(1),B(1),C(1),Y(0),X(1));
+FA3: full_adder_vhdl_code PORT MAP(A(2),B(2),C(2),Y(1),X(2));
+FA4: full_adder_vhdl_code PORT MAP(A(3),B(3),C(3),Y(2),X(3));
+ 
+-- Ripple carry adder block
+FA5: full_adder_vhdl_code PORT MAP(X(0),Y(0),'0',S(1),C1);
+FA6: full_adder_vhdl_code PORT MAP(X(1),Y(1),C1,S(2),C2);
+FA7: full_adder_vhdl_code PORT MAP(X(2),Y(2),C2,S(3),C3);
+FA8: full_adder_vhdl_code PORT MAP(X(3),'0',C3,S(4),Cout);
+
+
+4bit adder
+--------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity full is
+ Port( cin,x,y : in STD_LOGIC;
+       s,cout  : out STD_LOGIC );
+end full;
+
+architecture Behavioral of full is
+
+begin
+s <= x xor y xor cin;
+cout <= (x and y) or (y and cin) or (cin and x);
+
+end Behavioral;
+ 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity fourbit is
+ GENERIC ( n:INTEGER:=4);
+ Port( cin1 :in STD_LOGIC;
+       a,b : in STD_LOGIC_VECTOR(n-1 downto 0);
+       s : OUT STD_LOGIC_VECTOR(n-1 downto 0);
+       Cout1 : out STD_LOGIC );
+end fourbit;
+
+architecture Behavioral of fourbit is
+SIGNAL c:std_logic_vector(n-1 downto 0);
+component full
+Port( cin,x,y : in STD_LOGIC;
+       s,cout  : out STD_LOGIC );
+end component;
+
+begin
+fa_0 : full port map(cin1,a(0),b(0),s(0),c(1));
+g_1  : for  i in 1 to n-2 GENERATE
+fa_i : full port map( c(i), a(i),b(i),s(i),c(i+1));
+end generate;
+fa_n : full port map( c(n-1), a(n-1), b(n-1) ,s(n-1),Cout1);
+
+end Behavioral;
+-------------------------------------------------------------------------------------
+full adder using package
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity full is
+ Port( cin,x,y : in STD_LOGIC;
+       s,cout  : out STD_LOGIC);
+end full;
+
+architecture Behavioral of full is
+
+begin
+s <= x xor y xor cin;
+cout <= (x and y) or (y and cin) or (cin and x);
+
+end Behavioral;
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+package full_add is
+
+component full is
+port( cin,x,y :in std_logic;
+      s,cout : out std_logic);
+      
+end component full;
+
+end package full_add;
+----------------------------------------------------------------
+4bit adder using package
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity full is
+ Port( cin,x,y : in STD_LOGIC;
+       s,cout  : out STD_LOGIC);
+end full;
+
+architecture Behavioral of full is
+
+begin
+s <= x xor y xor cin;
+cout <= (x and y) or (y and cin) or (cin and x);
+
+end Behavioral;
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+package full_add is
+
+component full is
+port( cin,x,y :in std_logic;
+      s,cout : out std_logic);
+      
+end component full;
+
+end package full_add;
+-------------------------------------------------------------------------------
+16bit using package
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use work.full_add.all;
+
+
+entity sixteenusingpackage is
+ GENERIC ( n:INTEGER:=16);
+ Port( cin1 :in STD_LOGIC;
+       a,b : in STD_LOGIC_VECTOR(n-1 downto 0);
+       s : OUT STD_LOGIC_VECTOR(n-1 downto 0);
+       Cout1 : out STD_LOGIC );
+end sixteenusingpackage;
+
+architecture Behavioral of sixteenusingpackage is
+SIGNAL c:std_logic_vector(n-1 downto 1);
+
+
+begin
+fa_0 : fa port map(cin1,a(0),b(0),s(0),c(1));
+
+g_1  : for  i in 1 to n-2 GENERATE
+fa_i : fa port map( c(i), a(i),b(i),s(i),c(i+1));
+end generate;
+
+fa_n : fa port map( c(n-1), a(n-1), b(n-1) ,s(n-1),Cout1);
+
+end Behavioral;
+
+
+----FULL ADDER BEHAVIORAL-------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 02/05/2020 11:11:12 AM
+-- Design Name: 
+-- Module Name: fulladder - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity fulladder is
+ Port (a : in std_logic_vector(2 downto 0);
+      b : out std_logic_vector(1 downto 0) );
+
+end fulladder;
+
+architecture Behavioral of fulladder is
+begin
+  process(a)
+  begin
+ if (a = "000") then
+ b <= "00";
+ elsif ( a = "100" or a = "001" or a = "010") then
+ b <= "10";
+ elsif ( a = "011" or a = "101" or a = "110") then
+ b <= "01";
+ else
+ b <= "11";
+ end if;
+end process;
+end Behavioral;
+----------------------------------------------------------------------------------------------
+FULL ADDER STUCTURAL
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+entity xor1 is
+    Port ( a : in  STD_LOGIC;
+           b : in  STD_LOGIC;
+           c : out STD_LOGIC);
+end xor1;
+architecture Behavioral of xor1 is
+begin
+c <= a xor b;
+end Behavioral; 
+---------------------------------------------------------------------------------------------------------------------------
+--Code for and gate
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+entity and1 is
+    Port ( a : in  STD_LOGIC;
+           b : in STD_LOGIC;
+           c : out  STD_LOGIC);
+end and1;
+architecture Behavioral of and1 is
+begin
+c<= a and b;
+end Behavioral;
+---------------------------------------------------------------------------------------------------------------------------
+--Code for or gate
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+entity or1 is
+    Port ( a : in  STD_LOGIC;
+           b : in STD_LOGIC;
+           c : out  STD_LOGIC);
+end or1;
+architecture Behavioral of or1 is
+begin
+c<= a or b;
+end Behavioral;
+---------------------------------------------------------------------------------------------------------------------------
+
+
+  
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+entity structFA is
+    Port ( x : in  STD_LOGIC;
+           y : in  STD_LOGIC;
+           cin : in  STD_LOGIC;
+           sum : out  STD_LOGIC;
+           cout : out  STD_LOGIC);
+end structFA;
+
+architecture Structural of structFA is
+component or1 is
+Port (   a : in  STD_LOGIC;
+           b : in  STD_LOGIC;
+           c : out  STD_LOGIC);
+end component;
+
+component xor1 is
+Port ( a : in  STD_LOGIC;
+           b : in  STD_LOGIC;
+           c : out  STD_LOGIC);
+end component;
+
+component and1 is
+Port ( a : in  STD_LOGIC;
+           b : in  STD_LOGIC;
+           c : out  STD_LOGIC);
+end component;
+
+signal s1, s2, s3:STD_LOGIC;
+
+begin
+
+g1:xor1 port map(x,y,s1);
+g2:xor1 port map(s1, cin, sum);
+g3:and1 port map(x, y, s2);
+g4:and1 port map(s1, cin, s3);
+g5:or1 port map(s2, s3, cout);
+
+end Structural;
+
